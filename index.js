@@ -2,6 +2,8 @@ const express = require("express")
 const app = express()
 const path = require('path');
 const db = require('./db');
+app.use(express.urlencoded({ extended: true })); // Para interpretar dados de formulários
+
 
 
 
@@ -31,6 +33,23 @@ app.get('/dados', (req, res) => {
   });
 });
 
+app.post("/cadastrar/usuario", (req, res) => {
+  const { nome, email, senha, cpf } = req.body;
+
+  const sql = "INSERT INTO usuarios (usuario_nome, usuario_email, usuario_senha, usuario_cpf) VALUES (?, ?, ?, ?)";
+  
+  db.query(sql, [nome, email, senha, cpf], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+
+    // Redireciona para a tela inicial para mostrar o dado registrado
+    res.redirect("/dados");
+  });
+});
 
 
  
