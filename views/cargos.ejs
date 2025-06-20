@@ -1,0 +1,44 @@
+<% layout('layouts/base') %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome do Cargo</th>
+      <th>Salário</th>
+      <th>Setor</th>
+      <th>Carga Horária Semanal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((cargo) => { %>
+      <tr>
+        <td><%= cargo.cargo_nome %></td>
+        <td><%= cargo.cargo_salario %></td>
+        <td><%= cargo.cargo_setor %></td>
+        <td><%= cargo.cargo_carga_horaria_semanal %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<button id="abrir-form">Cadastrar novo</button>
+
+<form action="/cadastrar/cargo" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="nome">Nome do Cargo</label>
+    <input type="text" id="nome" name="nome" required />
+  </div>
+  <div>
+    <label for="salario">Salário</label>
+    <input type="number" step="0.01" id="salario" name="salario" required />
+  </div>
+  <div>
+    <label for="setor">Setor</label>
+    <input type="text" id="setor" name="setor" required />
+  </div>
+  <div>
+    <label for="carga_horaria">Carga Horária Semanal</label>
+    <input type="number" id="carga_horaria" name="carga_horaria" required />
+  </div>
+  <button type="submit">Cadastrar Cargo</button>
+</form>
