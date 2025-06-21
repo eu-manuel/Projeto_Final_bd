@@ -7,6 +7,7 @@
       <th>Salário</th>
       <th>Setor</th>
       <th>Carga Horária Semanal</th>
+      <th>Ações</th>
     </tr>
   </thead>
   <tbody>
@@ -15,15 +16,21 @@
         <td><%= cargo.cargo_nome %></td>
         <td><%= cargo.cargo_salario %></td>
         <td><%= cargo.cargo_setor %></td>
-        <td><%= cargo.cargo_carga_horaria_semanal %></td>
+        <td style="text-align: center;"><%= cargo.cargo_carga_horaria_semanal %></td>
+        <td>
+          <a href="<%= rotas.CARGOS_EXCLUIR(cargo.cargo_id) %>" 
+            class="button-excluir-sm" 
+            onclick="return confirmarExclusao()">
+            Excluir
+          </a>
+        </td>
       </tr>
     <% }) %>
   </tbody>
 </table>
 
-<button id="abrir-form">Cadastrar novo</button>
 
-<form action="/cadastrar/cargo" method="POST" id="form-cadastro" style="display: none;">
+<form action="/cadastrar/cargos" method="POST" id="form-cadastro" style="display: none;">
   <div>
     <label for="nome">Nome do Cargo</label>
     <input type="text" id="nome" name="nome" required />

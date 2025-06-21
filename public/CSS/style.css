@@ -1,50 +1,222 @@
-
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  margin: 20px;
+  background: #f7f7f7;
+  color: #333;
+  display: flex;
+  min-height: 100vh;
 }
-h1 {
-  text-align: center;
+/*
+
+  estilo do sidebar
+
+*/
+.sidebar {
+  width: 220px;
+  background: #004080;
+  color: white;
+  padding: 1rem;
+  flex-shrink: 0;
+  box-shadow: 2px 0 5px rgba(0,0,0,.1);
 }
-table {
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
-th, td {
-  border: 1px solid #ccc;
-  padding: 12px;
-  text-align: left;
-}
-th {
-  background-color: #f9f9f9;
-}
-tr:hover {
-  background-color: #f1f1f1;
-}
-form {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fafafa;
-}
-form div {
-  margin-bottom: 10px;
-}
-label {
+
+.sidebar nav a {
   display: block;
-  font-weight: bold;
+  padding: 0.5rem 0;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.1);
 }
-input {
-  padding: 8px;
+
+.sidebar nav a:hover {
+  background: rgba(255,255,255,.1);
+}
+
+
+/*
+
+elementos dentro da sidebar
+
+*/
+.menu-group {
+  margin-bottom: 0.5rem;
+}
+
+.menu-item {
   width: 100%;
-  box-sizing: border-box;
-}
-button {
-  padding: 10px 15px;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  padding: 0.5rem 0;
   font-size: 1rem;
   cursor: pointer;
+}
+
+.menu-item:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.submenu {
+  display: none;
+  padding-left: 1rem;
+}
+
+.submenu a {
+  display: block;
+  padding: 0.3rem 0;
+  color: #ddd;
+  text-decoration: none;
+}
+
+.submenu a:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+
+/*
+
+
+
+*/
+
+main {
+  flex: 1;
+  padding: 1rem;
+}
+
+main header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+main header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #004080;
+}
+
+button.voltar {
+  background: #ccc;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.voltar:hover {
+  background: #bbb;
+}
+
+.button-excluir-sm {
+  display: inline-block;
+  background: #dc3545;
+  color: white;
+  padding: 0.25rem 0.6rem;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.button-excluir-sm:hover {
+  background: #c82333;
+}
+
+.button-excluir-sm:active {
+  background: #bd2130;
+}
+
+
+
+.button-novo {
+  display: inline-block;
+  background: #28a745; /* verde */
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.button-novo:hover {
+  background: #218838; /* verde mais escuro no hover */
+}
+
+.button-novo:active {
+  background: #1e7e34; /* verde ainda mais escuro no clique */
+}
+
+
+.content form {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,.1);
+  max-width: 600px;
+}
+
+.content label {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.content input, .content select, .content textarea {
+  width: 100%;
+  padding: 0.4rem;
+  margin-top: 0.2rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.content button[type="submit"] {
+  background: #004080;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.content button[type="submit"]:hover {
+  background: #0059b3;
+}
+
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 0 5px rgba(0,0,0,.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.content table th,
+.content table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.content table th {
+  background: #004080;
+  color: white;
+  text-align: left;
 }

@@ -1,16 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title><%= title %></title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <h1><%= title %></h1>
+  <aside class="sidebar">
+    <nav>
+      <div class="menu-group">
+        <button class="menu-item" onclick="toggleSubmenu('cadastroSub')">Cadastro ▾</button>
+        <div class="submenu" id="cadastroSub">
+          <a href="<%= rotas.CARGOS_LISTAR %>">Cargos</a>
+          <a href=<%= rotas.USUARIOS_LISTAR %>>Usuarios</a>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <button class="menu-item" onclick="toggleSubmenu('professorSub')">Professores ▾</button>
+        <div class="submenu" id="professorSub">
+          <a href="/professore/cadastrar">Cadastrar</a>
+          <a href="/professore/relatorio">Relatórios</a>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <button class="menu-item" onclick="toggleSubmenu('turmaSub')">Turmas ▾</button>
+        <div class="submenu" id="turmaSub">
+          <a href="/turma/cadastrar">Cadastrar</a>
+          <a href="/turma/relatorio">Relatórios</a>
+        </div>
+      </div>
+    </nav>
+  </aside>
 
   <main>
-    <!-- Aqui vai o conteúdo específico da página -->
-    <%- body %>
+    <header>
+      <h1><%= title %></h1>
+      <button onclick="history.back()" class="voltar">Voltar</button>
+    </header>
+
+   <a href="<%=rotas.USUARIOS_CADASTRAR%>"> <button id="abrir-form" class="button-novo"> Cadastrar novo</button></a>
+    
+    
+
+    <section class="content">
+      <%- body %>
+    </section>
   </main>
 
   <script src="/js/script.js"></script>

@@ -1,0 +1,27 @@
+<% layout('layouts/base') %>
+
+<h1>Lista de Dados</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Telefone</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.usuario_nome %></td>
+        <td><%= item.usuario_cpf %></td>
+        <td><%= item.usuario_email %></td>
+        <td>
+          <a href="<%= rotas.CARGOS_EXCLUIR(item.usuario_id) %>" 
+            class="button-excluir-sm" 
+            onclick="return confirmarExclusao()">
+            Excluir
+          </a>
+        </td>
+      </tr>
+    <% }) %>

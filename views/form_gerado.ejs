@@ -1,0 +1,10 @@
+<form method="POST" action="/cadastrar/<%= tabela %>">
+  <% colunas.forEach(col => { %>
+    <% if (col.Extra !== 'auto_increment') { %>
+      <label><%= col.Field %>:</label>
+      <input type="text" name="<%= col.Field %>" />
+      <br/>
+    <% } %>
+  <% }) %>
+  <button type="submit">Cadastrar</button>
+</form>
