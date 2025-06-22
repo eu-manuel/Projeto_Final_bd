@@ -139,6 +139,19 @@ button.voltar:hover {
   background: #bd2130;
 }
 
+.content button[type="submit"] {
+  background: #004080;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.content button[type="submit"]:hover {
+  background: #0059b3;
+}
 
 
 .button-novo {
@@ -184,20 +197,6 @@ button.voltar:hover {
   margin-top: 0.2rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-.content button[type="submit"] {
-  background: #004080;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-.content button[type="submit"]:hover {
-  background: #0059b3;
 }
 
 .content table {

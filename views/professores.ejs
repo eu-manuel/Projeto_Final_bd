@@ -1,0 +1,57 @@
+<% layout('layouts/base') %>
+
+
+<form action="<%= rotas.PROFESSORES_CADASTRAR %>" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="usuario_id">ID do Usuário</label>
+    <input type="number" id="usuario_id" name="professor_usuario_id" required />
+  </div>
+  <div>
+    <label for="formacao">Formação</label>
+    <input type="text" id="formacao" name="professor_formacao" maxlength="100" required />
+  </div>
+  <div>
+    <label for="especialidade">Especialidade</label>
+    <input type="text" id="especialidade" name="professor_especialidade" maxlength="100" required />
+  </div>
+  <div>
+    <label for="cargo_id">ID do Cargo</label>
+    <input type="number" id="cargo_id" name="professor_cargo_id" required />
+  </div>
+  <button type="submit">Cadastrar Professor</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID Usuário</th>
+      <th>Formação</th>
+      <th>Especialidade</th>
+      <th>ID Cargo</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.professor_usuario_id %></td>
+        <td><%= item.professor_formacao %></td>
+        <td><%= item.professor_especialidade %></td>
+        <td><%= item.professor_cargo_id %></td>
+        <td>
+          <form method="POST"
+                action="<%= rotas.EXCLUIR
+                  .replace(':tabela', 'professores')
+                  .replace(':pk', 'professor_usuario_id')
+                  .replace(':id', item.professor_usuario_id) %>"
+                style="display: inline;">
+            <button type="submit" class="button-excluir-sm">
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+

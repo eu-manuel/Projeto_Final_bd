@@ -1,36 +1,8 @@
 <% layout('layouts/base') %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nome do Cargo</th>
-      <th>Salário</th>
-      <th>Setor</th>
-      <th>Carga Horária Semanal</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% dados.forEach((cargo) => { %>
-      <tr>
-        <td><%= cargo.cargo_nome %></td>
-        <td><%= cargo.cargo_salario %></td>
-        <td><%= cargo.cargo_setor %></td>
-        <td style="text-align: center;"><%= cargo.cargo_carga_horaria_semanal %></td>
-        <td>
-          <a href="<%= rotas.CARGOS_EXCLUIR(cargo.cargo_id) %>" 
-            class="button-excluir-sm" 
-            onclick="return confirmarExclusao()">
-            Excluir
-          </a>
-        </td>
-      </tr>
-    <% }) %>
-  </tbody>
-</table>
 
 
-<form action="/cadastrar/cargos" method="POST" id="form-cadastro" style="display: none;">
+<form action=<%= rotas.CARGOS_CADASTRAR %> method="POST" id="form-cadastro" style="display: none; ">
   <div>
     <label for="nome">Nome do Cargo</label>
     <input type="text" id="nome" name="nome" required />
@@ -49,3 +21,39 @@
   </div>
   <button type="submit">Cadastrar Cargo</button>
 </form>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome do Cargo</th>
+      <th>Salário</th>
+      <th>Setor</th>
+      <th>Carga Horária Semanal</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((cargo) => { %>
+      <tr>
+        <td><%= cargo.cargo_nome %></td>
+        <td><%= cargo.cargo_salario %></td>
+        <td><%= cargo.cargo_setor %></td>
+        <td style="text-align: center;"><%= cargo.cargo_carga_horaria_semanal %></td>
+        <td>
+          <form method="POST" 
+                action="<%= rotas.EXCLUIR
+                          .replace(':tabela', 'cargos')
+                          .replace(':pk', 'cargo_id')
+                          .replace(':id', cargo.cargo_id) %>"
+                style="display: inline;">
+            <button type="submit" class="button-excluir-sm">
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+

@@ -25,8 +25,8 @@ app.use((req, res, next) => {
 //rota padrão
 app.get("/", (req, res) => {
   res.render('frontpage', {
-    nome: "Manu",
-    frutas: ["Maçã", "Banana", "Uva"]
+    title: 'tela inicial',
+    dados: null 
   });
 });
 
@@ -71,6 +71,24 @@ app.get(rotas.USUARIOS_LISTAR, (req, res) => {
   });
 });
 
+app.get(rotas.PROFESSORES_LISTAR, (req, res) => {
+  db.query('SELECT * FROM professores', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    // Envia os dados para o navegador ou para o EJS
+    res.render('Professores', { 
+      title: 'Cadastro de professores',
+      dados: results
+    });
+  });
+});
+
+
+
 
 /*
 
@@ -80,12 +98,12 @@ Rotas para registrar no banco de dados
 
 
 //cadastrar usuario
-app.post("/cadastrar/usuarios", (req, res) => {
-  const { usuario_nome, usuario_email, usuario_senha, usuario_cpf } = req.body;
+app.post(rotas.USUARIOS_CADASTRAR, (req, res) => {
+  const { nome, email, senha, cpf } = req.body;
 
   const sql = "INSERT INTO usuarios (usuario_nome, usuario_email, usuario_senha, usuario_cpf) VALUES (?, ?, ?, ?)";
   
-  db.query(sql, [usuario_nome, usuario_email, usuario_senha, usuario_cpf], (err, result) => {
+  db.query(sql, [nome, email, senha,cpf], (err, result) => {
     if (err) {
       console.error("Erro ao inserir:", err);
       res.status(500).send("Erro no servidor");
@@ -97,8 +115,10 @@ app.post("/cadastrar/usuarios", (req, res) => {
     res.redirect(rotas.USUARIOS_LISTAR);
   });
 });
+
+
 // cadastrar cargo
-app.post("/cadastrar/cargos", (req, res) => {
+app.post(rotas.CARGOS_CADASTRAR, (req, res) => {
   const { nome, salario, setor, carga_horaria } = req.body;
 
   const sql = `
@@ -118,6 +138,29 @@ app.post("/cadastrar/cargos", (req, res) => {
   });
 });
 
+app.post(rotas.PROFESSORES_CADASTRAR, (req, res) => {
+  const { professor_usuario_id, professor_formacao, professor_especialidade, professor_cargo_id } = req.body;
+
+  const sql = `
+    INSERT INTO professores (professor_usuario_id, professor_formacao, professor_especialidade, professor_cargo_id)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  db.query(sql, [professor_usuario_id, professor_formacao, professor_especialidade, professor_cargo_id], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir professor:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    // Redireciona para a listagem de professores
+    res.redirect(rotas.PROFESSORES_LISTAR);
+  });
+});
+
+
+
+
 
 /*
 
@@ -125,7 +168,18 @@ Rotas para excluir registros na tabela
 
 */
 
-app.post(rotas.EXCLUIR, (req, res) => {
+
+
+
+
+
+
+
+
+/*ROTA GENERICA PARA EXCLUIR AINDA NAO IMPLEMENTEI DIREITO
+
+
+app.post(rotas.CARGOS_EXCLUIR, (req, res) => {
   const { id } = req.params;
 
   db.query('DELETE FROM cargos WHERE cargo_id = ?', [id], (err, result) => {
@@ -137,6 +191,70 @@ app.post(rotas.EXCLUIR, (req, res) => {
   });
 });
 
+*/
+
+
+app.post(rotas.EXCLUIR, (req, res) => {
+  const { tabela, pk, id } = req.params;
+
+  // ⚠️ Validação básica para não deixar excluir qualquer coisa de forma maliciosa
+  const tabelasPermitidas = [
+          "usuarios",
+          "cargos",
+          "professores",
+          "financeiros",
+          "administrativos",
+          "cursos",
+          "disciplinas",
+          "cursos_disciplinas",
+          "alunos",
+          "turmas",
+          "alunos_disciplinas",
+          "notas",
+          "tipos_pagamentos",
+          "pagamentos",
+          "aulas",
+          "faltas"
+]; // Adicione outras tabelas permitidas
+  const pksPermitidas = [
+        "usuario_id",
+        "cargo_id",
+        "professor_usuario_id",
+        "financeiro_usuario_id",
+        "administrativo_usuario_id",
+        "curso_id",
+        "disciplina_id",
+        "PRIMARY KEY (curso_disciplina_curso_id, curso_disciplina_disciplina_id)",
+        "aluno_id",
+        "turma_id",
+        "aluno_disciplina_id",
+        "nota_id",
+        "tipo_pagamento_id",
+        "pagamento_id",
+        "aula_id",
+        "PRIMARY KEY (falta_aluno_id,falta_aula_id)"
+];  // Adicione outras PKs permitidas
+
+  if (!tabelasPermitidas.includes(tabela) || !pksPermitidas.includes(pk)) {
+    return res.status(400).send("Operação não permitida");
+  }
+
+  const sql = `DELETE FROM ?? WHERE ?? = ?`;
+  const params = [tabela, pk, id];
+
+  db.query(sql, params, (err) => {
+    if (err) {
+      console.error(`Erro ao excluir em ${tabela}:`, err);
+      return res.status(500).send("Erro no servidor");
+    }
+    // Redireciona de acordo com a tabela
+    if (tabela === 'cargos') {
+      res.redirect('/cargos');
+    } else {
+      res.redirect('/');
+    }
+  });
+});
 
 
 
