@@ -1,0 +1,43 @@
+<form action="<%= rotas.CURSOS_DISCIPLINAS_CADASTRAR %>" method="POST" id="form-cadastro-curso-disciplina" style="display: none;">
+  <div>
+    <label for="curso_id">ID do Curso</label>
+    <input type="number" id="curso_id" name="curso_disciplina_curso_id" required />
+  </div>
+  <div>
+    <label for="disciplina_id">ID da Disciplina</label>
+    <input type="number" id="disciplina_id" name="curso_disciplina_disciplina_id" required />
+  </div>
+  <button type="submit">Relacionar Curso e Disciplina</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID Curso</th>
+      <th>ID Disciplina</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.curso_disciplina_curso_id %></td>
+        <td><%= item.curso_disciplina_disciplina_id %></td>
+        <td>
+          <form method="POST"
+                action="<%= rotas.EXCLUIR
+                  .replace(':tabela', 'cursos_disciplinas')
+                  .replace(':pk', 'curso_disciplina_curso_id')
+                  .replace(':id', item.curso_disciplina_curso_id)
+                  // Você pode precisar de outro botão ou lógica p/ deletar usando ambos os ids no backend
+                %>"
+                style="display: inline;">
+            <button type="submit" class="button-excluir-sm">
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

@@ -1,0 +1,44 @@
+<% layout('layouts/base') %>
+<form action="<%= rotas.CURSOS_CADASTRAR %>" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="curso_nome">Nome do Curso</label>
+    <input type="text" id="curso_nome" name="curso_nome" maxlength="100" required />
+  </div>
+  <div>
+    <label for="curso_carga_horaria_total">Carga Horária Total</label>
+    <input type="number" id="curso_carga_horaria_total" name="curso_carga_horaria_total" required />
+  </div>
+  <button type="submit">Cadastrar Curso</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome do Curso</th>
+      <th>Carga Horária Total</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.curso_id %></td>
+        <td><%= item.curso_nome %></td>
+        <td><%= item.curso_carga_horaria_total %></td>
+        <td>
+          <form method="POST"
+                action="<%= rotas.EXCLUIR
+                  .replace(':tabela', 'cursos')
+                  .replace(':pk', 'curso_id')
+                  .replace(':id', item.curso_id) %>"
+                style="display: inline;">
+            <button type="submit" class="button-excluir-sm">
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

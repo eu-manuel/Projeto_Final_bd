@@ -1,0 +1,49 @@
+<% layout('layouts/base') %>
+
+<form action="<%= rotas.ADMINISTRATIVOS_CADASTRAR %>" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="usuario_id">ID do Usuário</label>
+    <input type="number" id="usuario_id" name="administrativo_usuario_id" required />
+  </div>
+  <div>
+    <label for="funcao">Função</label>
+    <input type="text" id="funcao" name="administrativo_funcao" maxlength="50" required />
+  </div>
+  <div>
+    <label for="cargo_id">ID do Cargo</label>
+    <input type="number" id="cargo_id" name="administrativo_cargo_id" required />
+  </div>
+  <button type="submit">Cadastrar Administrativo</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID Usuário</th>
+      <th>Função</th>
+      <th>ID Cargo</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.administrativo_usuario_id %></td>
+        <td><%= item.administrativo_funcao %></td>
+        <td><%= item.administrativo_cargo_id %></td>
+        <td>
+          <form method="POST"
+                action="<%= rotas.EXCLUIR
+                  .replace(':tabela', 'administrativos')
+                  .replace(':pk', 'administrativo_usuario_id')
+                  .replace(':id', item.administrativo_usuario_id) %>"
+                style="display: inline;">
+            <button type="submit" class="button-excluir-sm">
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

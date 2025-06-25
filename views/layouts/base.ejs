@@ -9,29 +9,36 @@
   <aside class="sidebar">
     <nav>
       <div class="menu-group">
-        <button class="menu-item" onclick="toggleSubmenu('cadastroSub')">Cadastro ▾</button>
+        <button class="menu-item" onclick="toggleSubmenu('cadastroSub')">Cadastros ▾</button>
         <div class="submenu" id="cadastroSub">
+          <a href="<%= rotas.USUARIOS_LISTAR %>">Usuários</a>
           <a href="<%= rotas.CARGOS_LISTAR %>">Cargos</a>
-          <a href=<%= rotas.USUARIOS_LISTAR %>>Usuarios</a>
-          <a href=<%= rotas.PROFESSORES_LISTAR %>>Professores</a>
-
+          <a href="<%= rotas.ADMINISTRATIVOS_LISTAR %>">Administrativos</a>
+          <a href="<%= rotas.PROFESSORES_LISTAR %>">Professores</a>
+          <a href="<%= rotas.ALUNOS_LISTAR %>">Alunos</a>
         </div>
       </div>
 
       <div class="menu-group">
-        <button class="menu-item" onclick="toggleSubmenu('professorSub')">Professores ▾</button>
-        <div class="submenu" id="professorSub">
-          <a href="/professore/cadastrar">Cadastrar</a>
-          <a href="/professore/relatorio">Relatórios</a>
+        <button class="menu-item" onclick="toggleSubmenu('academicoSub')">Acadêmico ▾</button>
+        <div class="submenu" id="academicoSub">
+          <a href="<%= rotas.CURSOS_LISTAR %>">Cursos</a>
+          <a href="<%= rotas.DISCIPLINAS_LISTAR %>">Disciplinas</a>
+          <a href="<%= rotas.CURSOS_DISCIPLINAS_LISTAR %>">Cursos-Disciplinas</a>
+          <a href="<%= rotas.TURMAS_LISTAR %>">Turmas</a>
+          <a href="<%= rotas.AULAS_LISTAR %>">Aulas</a>
+          <a href="<%= rotas.FALTAS_LISTAR %>">Faltas</a>
+          <a href="<%= rotas.NOTAS_LISTAR %>">Notas</a>
+          <a href="<%= rotas.ALUNOS_DISCIPLINAS_LISTAR %>">Alunos-Disciplinas</a>
         </div>
       </div>
 
       <div class="menu-group">
-        <button class="menu-item" onclick="toggleSubmenu('turmaSub')">Turmas ▾</button>
-        <div class="submenu" id="turmaSub">
-          <a href="/turma/cadastrar">Cadastrar</a>
-          <a href="/turma/relatorio">Relatórios</a>
-
+        <button class="menu-item" onclick="toggleSubmenu('financeiroSub')">Financeiro ▾</button>
+        <div class="submenu" id="financeiroSub">
+          <a href="<%= rotas.FINANCEIROS_LISTAR %>">Financeiros</a>
+          <a href="<%= rotas.TIPOS_PAGAMENTOS_LISTAR %>">Tipos de Pagamento</a>
+          <a href="<%= rotas.PAGAMENTOS_LISTAR %>">Pagamentos</a>
         </div>
       </div>
     </nav>
@@ -43,9 +50,7 @@
       <button onclick="history.back()" class="voltar">Voltar</button>
     </header>
 
-   <button id="abrir-form" class="button-novo"> Cadastrar novo</button>
-    
-    
+    <button id="abrir-form" class="button-novo">Cadastrar novo</button>
 
     <section class="content">
       <%- body %>

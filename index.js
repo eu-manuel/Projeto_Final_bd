@@ -87,6 +87,85 @@ app.get(rotas.PROFESSORES_LISTAR, (req, res) => {
   });
 });
 
+app.get(rotas.FINANCEIROS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM financeiros', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em financeiros:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('financeiros', { 
+      title: 'Cadastro de financeiros',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.ADMINISTRATIVOS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM administrativos', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em administrativos:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('administrativos', { 
+      title: 'Cadastro de administrativos',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.CURSOS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM cursos', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em cursos:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('cursos', { 
+      title: 'Cadastro de cursos',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.DISCIPLINAS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM disciplinas', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em disciplinas:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('disciplinas', { 
+      title: 'Cadastro de disciplinas',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.CURSOS_DISCIPLINAS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM cursos_disciplinas', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em cursos_disciplinas:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('cursos_disciplinas', { 
+      title: 'Relacionamento Cursos x Disciplinas',
+      dados: results
+    });
+  });
+});
+
+
+
+
+
 
 
 
@@ -115,7 +194,6 @@ app.post(rotas.USUARIOS_CADASTRAR, (req, res) => {
     res.redirect(rotas.USUARIOS_LISTAR);
   });
 });
-
 
 // cadastrar cargo
 app.post(rotas.CARGOS_CADASTRAR, (req, res) => {
@@ -158,6 +236,102 @@ app.post(rotas.PROFESSORES_CADASTRAR, (req, res) => {
   });
 });
 
+app.post(rotas.FINANCEIROS_CADASTRAR, (req, res) => {
+  const { financeiro_usuario_id, financeiro_cargo_id } = req.body;
+
+  const sql = `
+    INSERT INTO financeiros (financeiro_usuario_id, financeiro_cargo_id)
+    VALUES (?, ?)
+  `;
+
+  db.query(sql, [financeiro_usuario_id, financeiro_cargo_id], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir financeiro:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.FINANCEIROS_LISTAR);
+  });
+});
+
+app.post(rotas.ADMINISTRATIVOS_CADASTRAR, (req, res) => {
+  const { administrativo_usuario_id, administrativo_funcao, administrativo_cargo_id } = req.body;
+
+  const sql = `
+    INSERT INTO administrativos (administrativo_usuario_id, administrativo_funcao, administrativo_cargo_id)
+    VALUES (?, ?, ?)
+  `;
+
+  db.query(sql, [administrativo_usuario_id, administrativo_funcao, administrativo_cargo_id], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir administrativo:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.ADMINISTRATIVOS_LISTAR);
+  });
+});
+
+app.post(rotas.CURSOS_CADASTRAR, (req, res) => {
+  const { curso_nome, curso_carga_horaria_total } = req.body;
+
+  const sql = `
+    INSERT INTO cursos (curso_nome, curso_carga_horaria_total)
+    VALUES (?, ?)
+  `;
+
+  db.query(sql, [curso_nome, curso_carga_horaria_total], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir curso:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.CURSOS_LISTAR);
+  });
+});
+
+app.post(rotas.DISCIPLINAS_CADASTRAR, (req, res) => {
+  const { disciplina_nome, disciplina_carga_horaria } = req.body;
+
+  const sql = `
+    INSERT INTO disciplinas (disciplina_nome, disciplina_carga_horaria)
+    VALUES (?, ?)
+  `;
+
+  db.query(sql, [disciplina_nome, disciplina_carga_horaria], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir disciplina:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.DISCIPLINAS_LISTAR);
+  });
+});
+
+app.post(rotas.CURSOS_DISCIPLINAS_CADASTRAR, (req, res) => {
+  const { curso_disciplina_curso_id, curso_disciplina_disciplina_id } = req.body;
+
+  const sql = `
+    INSERT INTO cursos_disciplinas (curso_disciplina_curso_id, curso_disciplina_disciplina_id)
+    VALUES (?, ?)
+  `;
+
+  db.query(sql, [curso_disciplina_curso_id, curso_disciplina_disciplina_id], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir curso-disciplina:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.CURSOS_DISCIPLINAS_LISTAR);
+  });
+});
+
+
 
 
 
@@ -197,7 +371,7 @@ app.post(rotas.CARGOS_EXCLUIR, (req, res) => {
 app.post(rotas.EXCLUIR, (req, res) => {
   const { tabela, pk, id } = req.params;
 
-  // ⚠️ Validação básica para não deixar excluir qualquer coisa de forma maliciosa
+  // Validação básica para não deixar excluir qualquer coisa de forma maliciosa
   const tabelasPermitidas = [
           "usuarios",
           "cargos",
@@ -233,7 +407,7 @@ app.post(rotas.EXCLUIR, (req, res) => {
         "pagamento_id",
         "aula_id",
         "PRIMARY KEY (falta_aluno_id,falta_aula_id)"
-];  // Adicione outras PKs permitidas
+];
 
   if (!tabelasPermitidas.includes(tabela) || !pksPermitidas.includes(pk)) {
     return res.status(400).send("Operação não permitida");
