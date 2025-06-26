@@ -1,0 +1,45 @@
+<% layout('layouts/base') %>
+
+<form action="<%= rotas.TIPOS_PAGAMENTOS_CADASTRAR %>" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="tipo_pagamento_nome">Nome do Tipo de Pagamento</label>
+    <input type="text" id="tipo_pagamento_nome" name="tipo_pagamento_nome" maxlength="50" required />
+  </div>
+  <div>
+    <label for="tipo_pagamento_descricao">Descrição</label>
+    <textarea id="tipo_pagamento_descricao" name="tipo_pagamento_descricao"></textarea>
+  </div>
+  <button type="submit">Cadastrar Tipo de Pagamento</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.tipo_pagamento_id %></td>
+        <td><%= item.tipo_pagamento_nome %></td>
+        <td><%= item.tipo_pagamento_descricao || '-' %></td>
+        <td>
+          <form method="POST"
+                action="<%= rotas.EXCLUIR
+                  .replace(':tabela', 'tipos_pagamentos')
+                  .replace(':pk', 'tipo_pagamento_id')
+                  .replace(':id', item.tipo_pagamento_id) %>"
+                style="display: inline;">
+            <button type="submit" class="button-excluir-sm">
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

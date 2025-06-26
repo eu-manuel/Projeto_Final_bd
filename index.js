@@ -162,6 +162,128 @@ app.get(rotas.CURSOS_DISCIPLINAS_LISTAR, (req, res) => {
   });
 });
 
+app.get(rotas.ALUNOS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM alunos', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em alunos:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('alunos', { 
+      title: 'Cadastro de alunos',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.TURMAS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM turmas', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em turmas:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('turmas', { 
+      title: 'Cadastro de turmas',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.ALUNOS_DISCIPLINAS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM alunos_disciplinas', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em alunos_disciplinas:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('alunos_disciplinas', { 
+      title: 'Vínculo Alunos x Disciplinas',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.NOTAS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM notas', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em notas:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('notas', { 
+      title: 'Cadastro de notas',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.TIPOS_PAGAMENTOS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM tipos_pagamentos', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em tipos_pagamentos:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('tipos_pagamentos', { 
+      title: 'Cadastro de Tipos de Pagamento',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.PAGAMENTOS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM pagamentos', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em pagamentos:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('pagamentos', { 
+      title: 'Cadastro de Pagamentos',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.AULAS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM aulas', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em aulas:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('aulas', { 
+      title: 'Cadastro de Aulas',
+      dados: results
+    });
+  });
+});
+
+app.get(rotas.FALTAS_LISTAR, (req, res) => {
+  db.query('SELECT * FROM faltas', (err, results) => {
+    if (err) {
+      console.error('Erro ao executar SELECT em faltas:', err);
+      res.status(500).send('Erro no servidor');
+      return;
+    }
+
+    res.render('faltas', { 
+      title: 'Registro de Faltas',
+      dados: results
+    });
+  });
+});
+
+
+
 
 
 
@@ -331,8 +453,212 @@ app.post(rotas.CURSOS_DISCIPLINAS_CADASTRAR, (req, res) => {
   });
 });
 
+app.post(rotas.ALUNOS_CADASTRAR, (req, res) => {
+  const { aluno_usuario_id, aluno_nome, aluno_cpf, aluno_data_ingresso } = req.body;
 
+  const sql = `
+    INSERT INTO alunos (aluno_usuario_id, aluno_nome, aluno_cpf, aluno_data_ingresso)
+    VALUES (?, ?, ?, ?)
+  `;
 
+  db.query(sql, [aluno_usuario_id, aluno_nome, aluno_cpf, aluno_data_ingresso], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir aluno:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.ALUNOS_LISTAR);
+  });
+});
+
+app.post(rotas.TURMAS_CADASTRAR, (req, res) => {
+  const { turma_nome, turma_ano_letivo, turma_semestre } = req.body;
+
+  const sql = `
+    INSERT INTO turmas (turma_nome, turma_ano_letivo, turma_semestre)
+    VALUES (?, ?, ?)
+  `;
+
+  db.query(sql, [turma_nome, turma_ano_letivo, turma_semestre], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir turma:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.TURMAS_LISTAR);
+  });
+});
+
+app.post(rotas.ALUNOS_DISCIPLINAS_CADASTRAR, (req, res) => {
+  const { 
+    aluno_disciplina_aluno_id, 
+    aluno_disciplina_curso_id, 
+    aluno_disciplina_disciplina_id, 
+    aluno_disciplina_turma_id, 
+    aluno_disciplina_data_matricula, 
+    aluno_disciplina_data_conclusao, 
+    aluno_disciplina_status 
+  } = req.body;
+
+  const sql = `
+    INSERT INTO alunos_disciplinas (
+      aluno_disciplina_aluno_id, 
+      aluno_disciplina_curso_id, 
+      aluno_disciplina_disciplina_id, 
+      aluno_disciplina_turma_id, 
+      aluno_disciplina_data_matricula, 
+      aluno_disciplina_data_conclusao, 
+      aluno_disciplina_status
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  db.query(sql, [
+    aluno_disciplina_aluno_id, 
+    aluno_disciplina_curso_id, 
+    aluno_disciplina_disciplina_id, 
+    aluno_disciplina_turma_id, 
+    aluno_disciplina_data_matricula, 
+    aluno_disciplina_data_conclusao || null, 
+    aluno_disciplina_status || null
+  ], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir vínculo aluno-disciplina:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.ALUNOS_DISCIPLINAS_LISTAR);
+  });
+});
+
+app.post(rotas.NOTAS_CADASTRAR, (req, res) => {
+  const { nota_aluno_disciplina_id, nota_valor, nota_tipo, nota_data } = req.body;
+
+  const sql = `
+    INSERT INTO notas (nota_aluno_disciplina_id, nota_valor, nota_tipo, nota_data)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  db.query(sql, [
+    nota_aluno_disciplina_id,
+    nota_valor,
+    nota_tipo || null,
+    nota_data || null
+  ], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir nota:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.NOTAS_LISTAR);
+  });
+});
+
+app.post(rotas.TIPOS_PAGAMENTOS_CADASTRAR, (req, res) => {
+  const { tipo_pagamento_nome, tipo_pagamento_descricao } = req.body;
+
+  const sql = `
+    INSERT INTO tipos_pagamentos (tipo_pagamento_nome, tipo_pagamento_descricao)
+    VALUES (?, ?)
+  `;
+
+  db.query(sql, [
+    tipo_pagamento_nome, 
+    tipo_pagamento_descricao || null
+  ], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir tipo de pagamento:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.TIPOS_PAGAMENTOS_LISTAR);
+  });
+});
+
+app.post(rotas.PAGAMENTOS_CADASTRAR, (req, res) => {
+  const {
+    pagamento_aluno_disciplina_id,
+    pagamento_tipo_pagamento_id,
+    pagamento_valor,
+    pagamento_data_pagamento,
+    pagamento_status
+  } = req.body;
+
+  const sql = `
+    INSERT INTO pagamentos (
+      pagamento_aluno_disciplina_id,
+      pagamento_tipo_pagamento_id,
+      pagamento_valor,
+      pagamento_data_pagamento,
+      pagamento_status
+    )
+    VALUES (?, ?, ?, ?, ?)
+  `;
+
+  db.query(sql, [
+    pagamento_aluno_disciplina_id,
+    pagamento_tipo_pagamento_id,
+    pagamento_valor,
+    pagamento_data_pagamento || null,
+    pagamento_status
+  ], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir pagamento:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.PAGAMENTOS_LISTAR);
+  });
+});
+
+app.post(rotas.AULAS_CADASTRAR, (req, res) => {
+  const { aula_professor_id, aula_disciplina_id, aula_turma_id, aulas_data } = req.body;
+
+  const sql = `
+    INSERT INTO aulas (aula_professor_id, aula_disciplina_id, aula_turma_id, aulas_data)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  db.query(sql, [
+    aula_professor_id,
+    aula_disciplina_id,
+    aula_turma_id,
+    aulas_data || null
+  ], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir aula:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.AULAS_LISTAR);
+  });
+});
+
+app.post(rotas.FALTAS_CADASTRAR, (req, res) => {
+  const { falta_aluno_id, falta_aula_id } = req.body;
+
+  const sql = `
+    INSERT INTO faltas (falta_aluno_id, falta_aula_id)
+    VALUES (?, ?)
+  `;
+
+  db.query(sql, [falta_aluno_id, falta_aula_id], (err, result) => {
+    if (err) {
+      console.error("Erro ao inserir falta:", err);
+      res.status(500).send("Erro no servidor");
+      return;
+    }
+
+    res.redirect(rotas.FALTAS_LISTAR);
+  });
+});
 
 
 
@@ -430,7 +756,56 @@ app.post(rotas.EXCLUIR, (req, res) => {
   });
 });
 
+app.post(rotas.EXCLUIR2, (req, res) => {
+  const { tabela } = req.params;
+  const { registros } = req.body; 
+  // registros deve ser um array de objetos com as chaves do PK
 
+  const tabelasPermitidas = [
+    "usuarios", "cargos", "professores", "financeiros", "administrativos",
+    "cursos", "disciplinas", "cursos_disciplinas", "alunos", "turmas",
+    "alunos_disciplinas", "notas", "tipos_pagamentos", "pagamentos", 
+    "aulas", "faltas"
+  ];
+
+  if (!tabelasPermitidas.includes(tabela)) {
+    return res.status(400).send("Operação não permitida: tabela inválida");
+  }
+
+  if (!Array.isArray(registros) || registros.length === 0) {
+    return res.status(400).send("Nenhum registro informado");
+  }
+
+  const queries = registros.map((pkObj) => {
+    const whereClauses = [];
+    const values = [];
+    for (const [campo, valor] of Object.entries(pkObj)) {
+      whereClauses.push(`?? = ?`);
+      values.push(campo, valor);
+    }
+    return {
+      sql: `DELETE FROM ?? WHERE ${whereClauses.join(' AND ')}`,
+      params: [tabela, ...values]
+    };
+  });
+
+  // Executa as queries em série
+  const execNext = (i) => {
+    if (i >= queries.length) {
+      return res.redirect(`/${tabela}`); // redireciona após todas exclusões
+    }
+    const { sql, params } = queries[i];
+    db.query(sql, params, (err) => {
+      if (err) {
+        console.error(`Erro ao excluir em ${tabela}:`, err);
+        return res.status(500).send("Erro no servidor");
+      }
+      execNext(i + 1);
+    });
+  };
+
+  execNext(0);
+});
 
 
 

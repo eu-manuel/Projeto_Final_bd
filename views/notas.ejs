@@ -1,0 +1,57 @@
+<% layout('layouts/base') %>
+
+<form action="<%= rotas.NOTAS_CADASTRAR %>" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="nota_aluno_disciplina_id">ID do Aluno-Disciplina</label>
+    <input type="number" id="nota_aluno_disciplina_id" name="nota_aluno_disciplina_id" required />
+  </div>
+  <div>
+    <label for="nota_valor">Valor da Nota</label>
+    <input type="number" id="nota_valor" name="nota_valor" step="0.01" required />
+  </div>
+  <div>
+    <label for="nota_tipo">Tipo da Nota</label>
+    <input type="text" id="nota_tipo" name="nota_tipo" maxlength="50" />
+  </div>
+  <div>
+    <label for="nota_data">Data da Nota</label>
+    <input type="date" id="nota_data" name="nota_data" />
+  </div>
+  <button type="submit">Cadastrar Nota</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>ID Aluno-Disciplina</th>
+      <th>Valor</th>
+      <th>Tipo</th>
+      <th>Data</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.nota_id %></td>
+        <td><%= item.nota_aluno_disciplina_id %></td>
+        <td><%= item.nota_valor %></td>
+        <td><%= item.nota_tipo || '-' %></td>
+        <td><%= item.nota_data || '-' %></td>
+        <td>
+          <form method="POST"
+                action="<%= rotas.EXCLUIR
+                  .replace(':tabela', 'notas')
+                  .replace(':pk', 'nota_id')
+                  .replace(':id', item.nota_id) %>"
+                style="display: inline;">
+            <button type="submit" class="button-excluir-sm">
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

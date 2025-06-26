@@ -1,0 +1,64 @@
+<% layout('layouts/base') %>
+
+<form action="<%= rotas.PAGAMENTOS_CADASTRAR %>" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="pagamento_aluno_disciplina_id">ID do Aluno-Disciplina</label>
+    <input type="number" id="pagamento_aluno_disciplina_id" name="pagamento_aluno_disciplina_id" required />
+  </div>
+  <div>
+    <label for="pagamento_tipo_pagamento_id">ID do Tipo de Pagamento</label>
+    <input type="number" id="pagamento_tipo_pagamento_id" name="pagamento_tipo_pagamento_id" required />
+  </div>
+  <div>
+    <label for="pagamento_valor">Valor</label>
+    <input type="number" id="pagamento_valor" name="pagamento_valor" step="0.01" required />
+  </div>
+  <div>
+    <label for="pagamento_data_pagamento">Data do Pagamento</label>
+    <input type="date" id="pagamento_data_pagamento" name="pagamento_data_pagamento" />
+  </div>
+  <div>
+    <label for="pagamento_status">Status</label>
+    <input type="text" id="pagamento_status" name="pagamento_status" maxlength="20" required />
+  </div>
+  <button type="submit">Cadastrar Pagamento</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>ID Aluno-Disciplina</th>
+      <th>ID Tipo Pagamento</th>
+      <th>Valor</th>
+      <th>Data Pagamento</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.pagamento_id %></td>
+        <td><%= item.pagamento_aluno_disciplina_id %></td>
+        <td><%= item.pagamento_tipo_pagamento_id %></td>
+        <td><%= item.pagamento_valor %></td>
+        <td><%= item.pagamento_data_pagamento || '-' %></td>
+        <td><%= item.pagamento_status %></td>
+        <td>
+          <form method="POST"
+                action="<%= rotas.EXCLUIR
+                  .replace(':tabela', 'pagamentos')
+                  .replace(':pk', 'pagamento_id')
+                  .replace(':id', item.pagamento_id) %>"
+                style="display: inline;">
+            <button type="submit" class="button-excluir-sm">
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+

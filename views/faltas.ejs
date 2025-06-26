@@ -1,0 +1,38 @@
+<% layout('layouts/base') %>
+
+<form action="<%= rotas.FALTAS_CADASTRAR %>" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="falta_aluno_id">ID do Aluno-Disciplina</label>
+    <input type="number" id="falta_aluno_id" name="falta_aluno_id" required />
+  </div>
+  <div>
+    <label for="falta_aula_id">ID da Aula</label>
+    <input type="number" id="falta_aula_id" name="falta_aula_id" required />
+  </div>
+  <button type="submit">Registrar Falta</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID Aluno Disciplina</th>
+      <th>ID Aula</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.falta_aluno_id %></td>
+        <td><%= item.falta_aula_id %></td>
+        <td>
+          <form method="POST" action=<%= rotas.EXCLUIR2 .replace(":tabela", "faltas")%> style="display: inline;">
+            <input type="hidden" name="registros[0][falta_aluno_id]" value="<%= item.falta_aluno_id %>">
+            <input type="hidden" name="registros[0][falta_aula_id]" value="<%= item.falta_aula_id %>">
+            <button type="submit" class="button-excluir-sm">Excluir</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

@@ -1,0 +1,67 @@
+<% layout('layouts/base') %>
+
+<form action="<%= rotas.ALUNOS_DISCIPLINAS_CADASTRAR %>" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="aluno_id">ID do Aluno</label>
+    <input type="number" id="aluno_id" name="aluno_disciplina_aluno_id" required />
+  </div>
+  <div>
+    <label for="curso_id">ID do Curso</label>
+    <input type="number" id="curso_id" name="aluno_disciplina_curso_id" required />
+  </div>
+  <div>
+    <label for="disciplina_id">ID da Disciplina</label>
+    <input type="number" id="disciplina_id" name="aluno_disciplina_disciplina_id" required />
+  </div>
+  <div>
+    <label for="turma_id">ID da Turma</label>
+    <input type="number" id="turma_id" name="aluno_disciplina_turma_id" required />
+  </div>
+  <div>
+    <label for="data_matricula">Data de Matrícula</label>
+    <input type="date" id="data_matricula" name="aluno_disciplina_data_matricula" required />
+  </div>
+  <div>
+    <label for="data_conclusao">Data de Conclusão</label>
+    <input type="date" id="data_conclusao" name="aluno_disciplina_data_conclusao" />
+  </div>
+  <div>
+    <label for="status">Status</label>
+    <input type="text" id="status" name="aluno_disciplina_status" maxlength="20" />
+  </div>
+  <button type="submit">Cadastrar Vínculo</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Aluno ID</th>
+      <th>Curso ID</th>
+      <th>Disciplina ID</th>
+      <th>Turma ID</th>
+      <th>Data Matrícula</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.aluno_disciplina_id %></td>
+        <td><%= item.aluno_disciplina_aluno_id %></td>
+        <td><%= item.aluno_disciplina_curso_id %></td>
+        <td><%= item.aluno_disciplina_disciplina_id %></td>
+        <td><%= item.aluno_disciplina_turma_id %></td>
+        <td><%= item.aluno_disciplina_data_matricula %></td>
+        <td><%= item.aluno_disciplina_status %></td>
+        <td>
+          <form method="POST" action=<%= rotas.EXCLUIR2 .replace(':tabela', 'alunos_disciplinas')%> style="display: inline;">
+            <input type="hidden" name="registros[0][aluno_disciplina_id]" value="<%= item.aluno_disciplina_id %>">
+            <button type="submit" class="button-excluir-sm">Excluir</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

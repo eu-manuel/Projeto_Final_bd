@@ -1,0 +1,57 @@
+<% layout('layouts/base') %>
+
+<form action="<%= rotas.ALUNOS_CADASTRAR %>" method="POST" id="form-cadastro" style="display: none;">
+  <div>
+    <label for="aluno_usuario_id">ID do Usuário</label>
+    <input type="number" id="aluno_usuario_id" name="aluno_usuario_id" required />
+  </div>
+  <div>
+    <label for="aluno_nome">Nome</label>
+    <input type="text" id="aluno_nome" name="aluno_nome" maxlength="100" required />
+  </div>
+  <div>
+    <label for="aluno_cpf">CPF</label>
+    <input type="text" id="aluno_cpf" name="aluno_cpf" maxlength="14" required />
+  </div>
+  <div>
+    <label for="aluno_data_ingresso">Data de Ingresso</label>
+    <input type="date" id="aluno_data_ingresso" name="aluno_data_ingresso" required />
+  </div>
+  <button type="submit">Cadastrar Aluno</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>ID Usuário</th>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Data de Ingresso</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dados.forEach((item) => { %>
+      <tr>
+        <td><%= item.aluno_id %></td>
+        <td><%= item.aluno_usuario_id %></td>
+        <td><%= item.aluno_nome %></td>
+        <td><%= item.aluno_cpf %></td>
+        <td><%= item.aluno_data_ingresso %></td>
+        <td>
+          <form method="POST"
+                action="<%= rotas.EXCLUIR
+                  .replace(':tabela', 'alunos')
+                  .replace(':pk', 'aluno_id')
+                  .replace(':id', item.aluno_id) %>"
+                style="display: inline;">
+            <button type="submit" class="button-excluir-sm">
+              Excluir
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
