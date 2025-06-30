@@ -55,6 +55,9 @@ app.get(rotas.CARGOS_LISTAR, (req, res) => {
   });
 });
 
+
+app.use('/', usuarioRoutes);
+/*
 app.get(rotas.USUARIOS_LISTAR, (req, res) => {
   db.query('SELECT * FROM usuarios', (err, results) => {
     if (err) {
@@ -70,6 +73,7 @@ app.get(rotas.USUARIOS_LISTAR, (req, res) => {
     });
   });
 });
+*/
 
 app.get(rotas.PROFESSORES_LISTAR, (req, res) => {
   db.query('SELECT * FROM professores', (err, results) => {
@@ -297,7 +301,7 @@ Rotas para registrar no banco de dados
 
 */
 
-
+/*
 //cadastrar usuario
 app.post(rotas.USUARIOS_CADASTRAR, (req, res) => {
   const { nome, email, senha, cpf } = req.body;
@@ -311,11 +315,12 @@ app.post(rotas.USUARIOS_CADASTRAR, (req, res) => {
       return;
     }
 
-
     // Redireciona para a tela inicial para mostrar oque foi registrado
     res.redirect(rotas.USUARIOS_LISTAR);
   });
 });
+*/
+
 
 // cadastrar cargo
 app.post(rotas.CARGOS_CADASTRAR, (req, res) => {

@@ -1,7 +1,7 @@
 module.exports = {
   HOME: "/",
   USUARIOS_LISTAR: "/usuarios",
-  USUARIOS_CADASTRAR: "/formulario/usuarios",
+  USUARIOS_CADASTRAR: "/usuarios",
 
   CARGOS_LISTAR: "/cargos",
   CARGOS_CADASTRAR: "/cadastrar/cargos",
