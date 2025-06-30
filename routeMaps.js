@@ -52,6 +52,9 @@ module.exports = {
 
   
   USUARIOS_EXCLUIR: (id) => `/usuario/delete/${id}`,
+
+  SCRIPTS: "/JS/script.js",
+  CSS:"/CSS/style.css",
   
   
   EXCLUIR: "/delete/:tabela/:pk/:id",

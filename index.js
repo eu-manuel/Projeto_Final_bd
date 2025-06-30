@@ -80,7 +80,7 @@ app.get(rotas.PROFESSORES_LISTAR, (req, res) => {
     }
 
     // Envia os dados para o navegador ou para o EJS
-    res.render('Professores', { 
+    res.render('professores', { 
       title: 'Cadastro de professores',
       dados: results
     });
