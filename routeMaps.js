@@ -50,8 +50,6 @@ module.exports = {
 
 
 
-  
-  USUARIOS_EXCLUIR: (id) => `/usuario/delete/${id}`,
 
   SCRIPTS: "/JS/script.js",
   CSS:"/CSS/style.css",
@@ -59,6 +57,7 @@ module.exports = {
   
   EXCLUIR: "/delete/:tabela/:pk/:id",
   EXCLUIR2: "/delete/:tabela", //excluir para tabelas com chaves compostas
+  
 
   FORMULARIO: (tabela) => `formulario/${tabela}`
 };

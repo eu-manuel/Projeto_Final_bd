@@ -4,6 +4,7 @@ const path = require('path');
 const db = require('./db');
 const engine = require('ejs-mate');
 const rotas = require("./routeMaps");
+const fs = require('fs');
 
 // Configura o ejs-mate como o engine do EJS
 app.engine('ejs', engine);
@@ -19,6 +20,16 @@ app.use((req, res, next) => {
   res.locals.rotas = rotas; 
   next();
 });
+
+// Carrega automaticamente todos os arquivos da pasta routes
+fs.readdirSync(path.join(__dirname, 'routes'))
+  .filter(file => file.endsWith('.js'))
+  .forEach((file) => {
+    const rota = require(`./routes/${file}`);
+    app.use('/', rota);
+    
+  });
+
 
 
 
@@ -56,7 +67,7 @@ app.get(rotas.CARGOS_LISTAR, (req, res) => {
 });
 
 
-app.use('/', usuarioRoutes);
+
 /*
 app.get(rotas.USUARIOS_LISTAR, (req, res) => {
   db.query('SELECT * FROM usuarios', (err, results) => {
